@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import mimetypes
 import os
 import random
 import sqlite3
@@ -93,7 +92,7 @@ def create_report(payload: object) -> dict:
     district = clean_text(payload.get("district"), "الحي", 40)
     state = clean_text(payload.get("state"), "الحالة", 10)
     severity = clean_text(payload.get("severity", "متوسطة"), "الأولوية", 20)
-    note = clean_text(payload.get("note", ""), "الوصف", 160, required=False) or "بلاغ جديد"
+    note = clean_text(payload.get("note", ""), "الوصف", 160, required=False)
 
     if state not in VALID_STATES:
         raise ValueError("الحالة المختارة غير معروفة")
@@ -102,6 +101,8 @@ def create_report(payload: object) -> dict:
     if state == "closed":
         severity = "—"
         note = note or "تمت المعالجة والتحقق"
+    else:
+        note = note or "بلاغ جديد"
 
     x = round(random.uniform(20, 80), 2)
     y = round(random.uniform(22, 80), 2)
