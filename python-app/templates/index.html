@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f2">
+  <meta name="description" content="لوحة تجريبية لرصد الحفر ومتابعة سلامة الطرق في مدينة حائل.">
+  <title>مرصد حائل | رصد الحفر</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="side" aria-label="القائمة الجانبية">
+      <div class="brand">
+        <div class="brandmark" aria-hidden="true">⌖</div>
+        <div><strong>مرصد حائل</strong><small>منصة سلامة الطرق</small></div>
+      </div>
+
+      <div>
+        <div class="navlabel">القائمة الرئيسية</div>
+        <nav class="nav" aria-label="القائمة الرئيسية">
+          <button class="active" type="button">◉ &nbsp; لوحة الرصد <span>⌂</span></button>
+          <button id="reportNav" type="button">＋ &nbsp; تسجيل بلاغ</button>
+          <button id="allReports" type="button">▤ &nbsp; سجل البلاغات</button>
+          <button id="analytics" type="button">▥ &nbsp; مؤشرات الأداء</button>
+        </nav>
+      </div>
+
+      <div>
+        <div class="navlabel">نطاق الرصد</div>
+        <div class="nav">
+          <button type="button">⌖ &nbsp; مدينة حائل <span>●</span></button>
+          <button type="button">⌄ &nbsp; الأحياء المشمولة</button>
+        </div>
+      </div>
+
+      <div class="side-bottom">
+        <div class="live"><i class="dot" aria-hidden="true"></i> النظام يعمل محليًا</div>
+        <br>واجهة تجريبية لإدارة ومتابعة بلاغات الطرق<br>© ٢٠٢٦ مرصد حائل
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="top">
+        <div>
+          <div class="eyebrow">أمان الطريق يبدأ ببلاغ</div>
+          <h1>لوحة رصد سلامة الطرق</h1>
+          <p class="sub">متابعة الحفر وملاحظات الطريق في مدينة حائل — بيانات تجريبية قابلة للتعديل</p>
+        </div>
+        <div class="actions">
+          <span class="date-pill" id="today"></span>
+          <button class="btn" id="exportBtn" type="button">↓ تصدير البيانات</button>
+          <button class="btn primary" id="newReport" type="button">＋ بلاغ جديد</button>
+        </div>
+      </header>
+
+      <section class="stats" aria-label="ملخص البلاغات">
+        <article class="card stat">
+          <div class="stat-top">البلاغات المفتوحة <span class="icon" aria-hidden="true">⚑</span></div>
+          <b id="openCount">٠</b><small class="red">تحتاج إلى معالجة</small>
+        </article>
+        <article class="card stat">
+          <div class="stat-top">تمت المعالجة <span class="icon" aria-hidden="true">✓</span></div>
+          <b id="closedCount">٠</b><small class="green">بلاغًا مغلقًا</small>
+        </article>
+        <article class="card stat">
+          <div class="stat-top">متوسط الاستجابة <span class="icon" aria-hidden="true">◷</span></div>
+          <b>٢٫٤ <small class="unit">يوم</small></b><small>من البلاغ حتى المعالجة</small>
+        </article>
+        <article class="card stat">
+          <div class="stat-top">مؤشر سلامة الطرق <span class="icon" aria-hidden="true">⌁</span></div>
+          <b>٨٦٪</b><small class="green">ضمن النطاق المستهدف</small>
+        </article>
+      </section>
+
+      <section class="content" aria-label="الخريطة وآخر البلاغات">
+        <article class="card mapcard">
+          <div class="section-head">
+            <div><h2>خريطة الحالة — مدينة حائل</h2><p>اختر علامة لعرض تفاصيل البلاغ</p></div>
+            <label class="visually-hidden" for="mapFilter">تصفية حالات الخريطة</label>
+            <select class="filter" id="mapFilter">
+              <option value="all">كل الحالات</option>
+              <option value="open">حفر مفتوحة</option>
+              <option value="closed">تمت المعالجة</option>
+            </select>
+          </div>
+
+          <div class="map">
+            <svg viewBox="0 0 760 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="خريطة توضيحية لأحياء مدينة حائل">
+              <rect class="map-bg" width="760" height="360" />
+              <path class="zone" d="M70 75 Q230 20 390 85T710 80V320Q540 355 390 300T80 325Z" />
+              <path class="block" d="M76 93l87-33 52 33-30 55-91-6zM226 60l98-17 51 57-34 54-85-22zM405 54l102 20-8 69-103-3-21-49zM553 66l94 15 31 63-83 20-55-42zM67 184l89-28 67 52-22 67-99-1zM226 173l108-14 42 55-24 80-105-18-30-47zM401 171l111-16 47 49-30 83-105-15-31-50zM577 181l87-5 26 71-49 57-74-22z" />
+              <path class="road" d="M0 166C145 172 195 143 296 154s176 42 269 18 125-28 195-21M323 0c-8 62 1 92 24 140s12 93-6 220M37 286c103-35 177-45 286-30s206 39 293-4 94-44 144-41" />
+              <path class="roadline" d="M0 166C145 172 195 143 296 154s176 42 269 18 125-28 195-21M323 0c-8 62 1 92 24 140s12 93-6 220M37 286c103-35 177-45 286-30s206 39 293-4 94-44 144-41" />
+              <path class="roadminor" d="M119 0c23 75 36 112 19 160s-3 117 18 200M520 0c-12 75 6 119 41 160s44 110 35 200M0 98c100 20 158 21 245-2s155-22 231 1 174 33 284 13M0 231c98 18 164 18 240 5s160-22 228 6 180 41 292 19" />
+              <path class="water" d="M44 335Q132 299 207 332T356 337" />
+              <text x="372" y="28" class="maplabel">النقرة</text>
+              <text x="625" y="44" class="maplabel">الجامعيين</text>
+              <text x="112" y="163" class="maplabel">الوسيطاء</text>
+              <text x="286" y="212" class="maplabel big">حائل</text>
+              <text x="510" y="241" class="maplabel">الزهراء</text>
+              <text x="656" y="321" class="maplabel">صديان</text>
+              <g id="pins"></g>
+            </svg>
+            <div class="maplabel-overlay">خريطة توضيحية · حائل</div>
+          </div>
+
+          <div class="map-footer">
+            <div class="map-legend">
+              <span><i class="legend-dot red-dot" aria-hidden="true"></i>حفرة مفتوحة</span>
+              <span><i class="legend-dot green-dot" aria-hidden="true"></i>تمت المعالجة</span>
+            </div>
+            <small>العلامات بيانات تجريبية</small>
+          </div>
+        </article>
+
+        <article class="card feed">
+          <div class="section-head">
+            <div><h2>أحدث البلاغات</h2><p>آخر التحديثات المسجلة</p></div>
+            <button class="filter" id="viewAll" type="button">عرض الكل ←</button>
+          </div>
+          <div class="feedlist" id="feed" aria-live="polite"></div>
+        </article>
+      </section>
+
+      <section class="lower" aria-label="مؤشرات ومعلومات">
+        <article class="card">
+          <h3>الحالة حسب الحي</h3>
+          <div class="bars" id="districtBars"></div>
+        </article>
+        <article class="card">
+          <h3>أولوية السلامة</h3>
+          <div class="focus">
+            <span class="ico" aria-hidden="true">⚠️</span>
+            <div><strong>البلاغات عالية الخطورة أولًا</strong><p>رتّب المعالجة بحسب عمق الحفرة، قربها من التقاطعات، وكثافة الحركة المرورية.</p></div>
+          </div>
+          <span class="tag">منهجية هندسة المرور</span>
+        </article>
+        <article class="card">
+          <h3>عن المنصة</h3>
+          <p class="specialty">مرصد حائل نموذج تخصصي لمتابعة عيوب رصف الطرق. يصنّف الحالة، يحدد الأولوية، ويوثق المعالجة لدعم قرارات الصيانة ورفع مستوى السلامة المرورية.</p>
+          <span class="tag">هندسة مدنية · هندسة النقل والمرور</span>
+        </article>
+      </section>
+
+      <p class="footnote page-note">ملاحظة: لا تمثل البيانات أو النقاط حالة ميدانية فعلية ولا ترتبط بنظام أمانة حائل. للاستخدام التعليمي والتجريبي فقط.</p>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="modalback" id="modal" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+      <h2 id="modalTitle">تسجيل بلاغ طريق</h2>
+      <p id="modalDescription">أضف ملاحظة جديدة إلى لوحة الرصد التجريبية.</p>
+      <form id="reportForm">
+        <div class="fields">
+          <div class="field">
+            <label for="district">الحي</label>
+            <select id="district" required>
+              <option value="النقرة">النقرة</option>
+              <option value="الوسيطاء">الوسيطاء</option>
+              <option value="الجامعيين">الجامعيين</option>
+              <option value="الزهراء">الزهراء</option>
+              <option value="صديان">صديان</option>
+              <option value="أخرى">أخرى</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="severity">الأولوية</label>
+            <select id="severity">
+              <option value="عالية">عالية</option>
+              <option value="متوسطة">متوسطة</option>
+              <option value="منخفضة">منخفضة</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="location">الشارع أو وصف الموقع</label>
+            <input id="location" required maxlength="100" placeholder="مثال: شارع الملك عبدالعزيز">
+          </div>
+          <div class="field full">
+            <label for="condition">الحالة</label>
+            <select id="condition">
+              <option value="open">حفرة مفتوحة</option>
+              <option value="closed">تمت المعالجة</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="note">وصف مختصر</label>
+            <input id="note" maxlength="160" placeholder="عمق تقريبي، قرب تقاطع…">
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn primary" type="submit">حفظ البلاغ</button>
+          <button class="btn" id="cancel" type="button">إلغاء</button>
+        </div>
+      </form>
+      <p class="footnote">يُحفظ التعديل في هذا المتصفح فقط (LocalStorage).</p>
+    </section>
+  </div>
+</body>
+</html>
