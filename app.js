@@ -1,4 +1,4 @@
-use strict';
+'use strict';
 
 const STORAGE_KEY = 'hailReports';
 const INITIAL_REPORTS = [
